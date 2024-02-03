@@ -55,7 +55,7 @@ function App() {
           <Button handleClick={handleClick} isActive={isActive}/>
           <Alphabets inputRef={inputRef}/>
           <div className='mt-5'>
-            <p className='font-bold text-xl'>Attempts: {attempts}</p>
+            <p className='font-bold text-xl'>Attempts: {attempts} left</p>
           </div>
         </div>
       </div>
