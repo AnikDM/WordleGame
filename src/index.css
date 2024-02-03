@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&family=Protest+Strike&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.title{
+    font-family: 'Protest Strike', sans-serif;
+}
+.input{
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: bolder;
+}
