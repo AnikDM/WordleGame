@@ -24,7 +24,7 @@ function App() {
     setSpinner(false);
   }, 500);
   const len = word.current.length;
-  // console.log(word.current);
+  console.log(word.current);
   const inputRef = useRef([]);
   const [attempts, setAttempts] = useState(5);
   const [inp, setInp] = useState(new Array(len).fill(""));
@@ -62,7 +62,6 @@ function App() {
     }
     // console.log(inp.join(''))
     if (inp.join("") === word.current.toUpperCase()) {
-      console.log(width + " " + height);
       setText({ confetti: true, value: "Congrats! You Won" });
       setIsOpen(true);
     } else if (attempts === 0) {
@@ -123,10 +122,11 @@ function App() {
             </button>
           </Box>
         </Modal>
-        <div className="app">
-          <div className=" bg-yellow-400 w-full h-28 shadow-md flex items-center justify-center">
+        <div className="app overflow-y-auto">
+          <div className=" bg-yellow-400 w-full h-28 shadow-md flex items-center justify-center fixed">
             <h1 className="text-5xl title">Wordle Game</h1>
           </div>
+          <div className="mt-32"></div>
           {spinner ? <Spinner /> : ""}
           {isHowToPlay ? (
             <>
