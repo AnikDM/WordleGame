@@ -24,7 +24,7 @@ function App() {
     setSpinner(false);
   }, 500);
   const len = word.current.length;
-  console.log(word.current);
+  // console.log(word.current);
   const inputRef = useRef([]);
   const [attempts, setAttempts] = useState(5);
   const [inp, setInp] = useState(new Array(len).fill(""));
@@ -35,7 +35,7 @@ function App() {
   let incAlbhabets2 = [];
   const [text, setText] = useState({
     confetti: false,
-    value: "Sorry! You lose",
+    value: `Alas! You lose. The word was "${word.current}"`,
   });
 
   const { width, height } = useWindowSize();
@@ -74,15 +74,15 @@ function App() {
       incAlbhabets2 = inp.filter((item) =>
         word.current.toUpperCase().includes(item)
       );
-      console.log(incAlbhabets);
-      console.log(incAlbhabets2);
+      // console.log(incAlbhabets);
+      // console.log(incAlbhabets2);
       setInp(new Array(len).fill(""));
       setAttempts(attempts - 1);
       incAlbhabets2.forEach((item) => {
-        inputRef.current[item.toLowerCase()].classNameList.add("bg-green-600");
+        inputRef.current[item.toLowerCase()].classList.add("bg-green-600");
       });
       incAlbhabets.forEach((item) => {
-        inputRef.current[item.toLowerCase()].classNameList.add("bg-red-600");
+        inputRef.current[item.toLowerCase()].classList.add("bg-red-600");
       });
     }
   }
@@ -116,7 +116,7 @@ function App() {
               {text.value}
             </Typography>
             <button
-              className=" bg-yellow-500 p-2 rounded-md mt-2 font-bold"
+              className=" bg-yellow-400 p-2 rounded-md mt-2 font-bold"
               onClick={handleClose}
             >
               Play Again
