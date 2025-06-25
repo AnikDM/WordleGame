@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import RowInput from "./components/RowInput";
+import RowFixed from "./components/RowFixed";
 import { inputContext } from "./context/inputContext";
 import Alphabets from "./components/Alphabets";
 import Button from "./components/Button";
@@ -12,6 +13,8 @@ import Spinner from "./components/Spinner";
 import Footer from "./components/Footer";
 import HowToPlay from "./components/HowToPlay";
 import { BrowserRouter } from "react-router-dom";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import LightModeIcon from "@mui/icons-material/LightMode";
 // import { BrowserRouter, Route, Routes } from "react-router-dom";
 // import HowToPlay from "./components/HowToPlay";
 
@@ -19,14 +22,25 @@ function App() {
   const word = useRef(generate({ minLength: 3, maxLength: 7 }));
   const [spinner, setSpinner] = useState(false);
   const [isHowToPlay, setIsHowToPlay] = useState(true);
+  const [darkMode, setDarkMode] = useState(false);
   useEffect(() => setSpinner(true), []);
+  useEffect(() => {
+    const root = window.document.documentElement;
+    if (darkMode) {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
+  }, [darkMode]);
   setTimeout(() => {
     setSpinner(false);
   }, 500);
   const len = word.current.length;
-  console.log(word.current);
+  useEffect(() => {
+  console.log(word.current);},[])
   const inputRef = useRef([]);
   const [attempts, setAttempts] = useState(5);
+  const [solvedWords, setsolvedWords] = useState([]);
   const [inp, setInp] = useState(new Array(len).fill(""));
   const [isActive, setIsActive] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
@@ -60,13 +74,13 @@ function App() {
         message: "You have only 3 attempts remaining!",
       });
     }
-    // console.log(inp.join(''))
     if (inp.join("") === word.current.toUpperCase()) {
       setText({ confetti: true, value: "Congrats! You Won" });
       setIsOpen(true);
     } else if (attempts === 0) {
       setIsOpen(true);
     } else {
+      setsolvedWords(prev=>([...prev,inp.join("")]))
       incAlbhabets = inp.filter((item) => {
         if (!word.current.toUpperCase().includes(item)) return item;
       });
@@ -123,14 +137,29 @@ function App() {
           </Box>
         </Modal>
         <div className="app overflow-y-auto">
-          <div className=" bg-yellow-400 w-full h-28 shadow-md flex items-center justify-center fixed">
+          <div className=" bg-yellow-400 w-full h-28 shadow-md flex items-center justify-center dark:text-gray-800 fixed top-0">
             <h1 className="text-5xl title">Wordle Game</h1>
+            <div className="text-xl absolute right-24 rounded-full p-1 gap-3 flex">
+              <div className="me-12 flex gap-10 font-bold">
+                <span>Points: 0</span>
+                <span>Attempts: {attempts + 1} left</span>
+              </div>
+              <button onClick={() => setDarkMode(!darkMode)}>
+                {darkMode ? (
+                  <LightModeIcon fontSize="large" />
+                ) : (
+                  <DarkModeIcon fontSize="large" />
+                )}
+              </button>
+            </div>
           </div>
-          <div className="mt-32"></div>
           {spinner ? <Spinner /> : ""}
           {isHowToPlay ? (
-            <>
-              <div className="my-5 input">
+            <div className="dark:bg-gray-800 mt-32">
+              <div className="input block">
+                {solvedWords.map(item=>(
+                  <RowFixed key={item} solvedWord={item} actualWord={word.current}/>            
+                ))}
                 <RowInput len={len} setIsActive={setIsActive} />
               </div>
               <div className="">
@@ -142,7 +171,7 @@ function App() {
                   </p>
                 </div>
               </div>
-            </>
+            </div>
           ) : (
             <HowToPlay setIsHowToPlay={setIsHowToPlay} />
           )}
@@ -150,7 +179,7 @@ function App() {
         <Footer setIsHowToPlay={setIsHowToPlay} />
       </BrowserRouter>
     </inputContext.Provider>
-  );  
+  );
 }
 
 export default App;

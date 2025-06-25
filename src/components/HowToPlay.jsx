@@ -27,7 +27,7 @@ const HowToPlay = ({ setIsHowToPlay }) => {
       <div className="text-center mt-5">
         <button
           onClick={() => setIsHowToPlay(true)}
-          className=" bg-yellow-500 p-3 rounded-md font-bold text-2xl hover:bg-yellow-600"
+          className=" bg-yellow-500 p-3 rounded-md font-bold text-2xl hover:bg-yellow-600 dark:text-gray-800"
         >
           Lets Play
         </button>
