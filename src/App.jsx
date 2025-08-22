@@ -25,19 +25,30 @@ function App() {
   const [darkMode, setDarkMode] = useState(false);
   useEffect(() => setSpinner(true), []);
   useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Enter" && isActive) {
+        // handleClick();
+      }
+    };
+    // Attach event listener to the document
+    document.addEventListener("keydown", handleKeyDown);
     const root = window.document.documentElement;
     if (darkMode) {
       root.classList.add("dark");
     } else {
       root.classList.remove("dark");
     }
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
   }, [darkMode]);
   setTimeout(() => {
     setSpinner(false);
   }, 500);
   const len = word.current.length;
   useEffect(() => {
-  console.log(word.current);},[])
+    console.log(word.current);
+  }, []);
   const inputRef = useRef([]);
   const [attempts, setAttempts] = useState(5);
   const [solvedWords, setsolvedWords] = useState([]);
@@ -64,7 +75,6 @@ function App() {
     boxShadow: 24,
     p: 4,
   };
-
   // console.log(inputRef);
   function handleClick() {
     setIsActive(true);
@@ -80,7 +90,7 @@ function App() {
     } else if (attempts === 0) {
       setIsOpen(true);
     } else {
-      setsolvedWords(prev=>([...prev,inp.join("")]))
+      setsolvedWords((prev) => [...prev, inp.join("")]);
       incAlbhabets = inp.filter((item) => {
         if (!word.current.toUpperCase().includes(item)) return item;
       });
@@ -157,8 +167,12 @@ function App() {
           {isHowToPlay ? (
             <div className="dark:bg-gray-800 mt-32">
               <div className="input block">
-                {solvedWords.map(item=>(
-                  <RowFixed key={item} solvedWord={item} actualWord={word.current}/>            
+                {solvedWords.map((item) => (
+                  <RowFixed
+                    key={item}
+                    solvedWord={item}
+                    actualWord={word.current}
+                  />
                 ))}
                 <RowInput len={len} setIsActive={setIsActive} />
               </div>

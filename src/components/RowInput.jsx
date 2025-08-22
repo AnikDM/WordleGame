@@ -39,7 +39,7 @@ const RowInput = ({len,setIsActive}) => {
   return (
     <div className="my-2">  
         {inp.map((value,index)=>{
-          return <input className='w-20 h-20 max-sm:w-16 max-sm:h-16 text-3xl max-sm:text-2xl border border-gray-800 rounded-md mx-1 text-center dark:bg-gray-800 dark:border-white' key={index} ref={input=>inputRef.current[index]=input} onKeyDown={e=>handleDlt(e,index)} type="text" value={value}  onChange={(e)=>handleChange(e,index)}/>
+          return <input className='w-20 h-20 max-sm:w-16 max-sm:h-16 text-3xl max-sm:text-2xl border border-gray-800 rounded-md mx-1 text-center dark:bg-gray-800 dark:border-white' key={index} ref={input=>inputRef.current[index]=input} onKeyDown={e=>handleDlt(e,index)} type="text" value={value} onChange={(e)=>handleChange(e,index)}/>
         })}
     </div>
   )
